@@ -1,0 +1,67 @@
+version: '3'
+services:
+  #PHP Service
+  app-recrutation-blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: app-recrutation-blog
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app-recrutation-blog
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./docker/certs/:/etc/ssl/certs/
+    networks:
+      - app-network-blog
+
+  #Nginx Service
+  webserver-recrutation-blog:
+    image: nginx:alpine
+    container_name: webserver-recrutation-blog
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "83:80"
+      - "444:444"
+    expose:
+      - "80"
+      - "444"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certs/:/etc/ssl/certs/
+    networks:
+      - app-network-blog
+
+  #MySQL Service
+  db-recrutation-blog:
+    image: mysql:5.7.22
+    container_name: db-recrutation-blog
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3308:3308"
+    environment:
+      MYSQL_DATABASE: db-recrutation-blog
+      MYSQL_ROOT_PASSWORD: test
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network-blog
+#Docker Networks
+networks:
+  app-network-blog:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
