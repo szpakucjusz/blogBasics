@@ -20,7 +20,6 @@ class Image extends Model
 
     public static function relatePost(StorePost $storePost, Post $post): void
     {
-        if (count($storePost->photos) > 0) {
             $i = 0;
             foreach ($storePost->photos as $photo) {
                 $photoName = $photo->store($post->id);
@@ -29,6 +28,5 @@ class Image extends Model
                 ]);
                 $i++;
             }
-        }
     }
 }
