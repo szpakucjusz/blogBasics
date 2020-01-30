@@ -52,7 +52,7 @@ class RegisterController extends Controller
     public function register(StoreRegisterUser $request, UserService $userService)
     {
         $userService->createUser($request);
-        event(new Registered($user = $userService->getUser()));
+        $user = $userService->getUser();
         $this->guard()->login($user);
 
         return $this->registered($request, $user) ?: redirect($this->redirectPath());

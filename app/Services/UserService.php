@@ -1,12 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Http\Requests\StorePost;
-use App\Model\Image;
-use App\Model\Post;
 use App\Model\User;
 use App\Requests\StoreRegisterUser;
+use App\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+
 
 class UserService
 {
@@ -19,6 +18,7 @@ class UserService
             'email' => $storeRegisterUser['email'],
             'password' => Hash::make($storeRegisterUser['password']),
         ]);
+        event(new Registered($this->user));
     }
 
     public function getUser(): User

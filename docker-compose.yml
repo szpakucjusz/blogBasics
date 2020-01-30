@@ -57,6 +57,22 @@ services:
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network-blog
+  redis-recrutation-blog:
+    container_name: redis-recrutation-blog
+    image: redis:5.0
+    ports:
+      - "6382:6379"
+    networks:
+      - app-network-blog
+#  php-queue-recrutation-blog:
+#    container_name: php-queue-recrutation-blog
+#    restart: always
+#    image: php:7.4-fpm
+#    command: php artisan queue:work
+#    volumes:
+#      - ./:/var/www
+#    networks:
+#      - app-network-blog
 #Docker Networks
 networks:
   app-network-blog:
