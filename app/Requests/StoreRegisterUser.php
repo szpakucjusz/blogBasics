@@ -1,10 +1,10 @@
 <?php
-
-namespace App\Http\Requests;
+namespace App\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class StorePost extends FormRequest
+class StoreRegisterUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StorePost extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard();
     }
 
     /**
@@ -23,11 +23,10 @@ class StorePost extends FormRequest
      */
     public function rules()
     {
-        //There is option to add custom validate rules, but in this case there is no needed.
         return [
-            'name' => 'required|unique:post|min:3|max:255',
-            'photos' => 'required',
-            'photos.*' => 'required|mimes:png,jpg,jpeg,svg|max:2048'
+            'name' => ['required', 'string', 'min:3', 'max:15'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 }
