@@ -23,6 +23,16 @@ class RegisterController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
      * Show the application registration form.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +45,8 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreRegisterUser $request
+     * @param UserService $userService
      * @return \Illuminate\Http\Response
      */
     public function register(StoreRegisterUser $request, UserService $userService)
@@ -67,15 +78,5 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         //
-    }
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
     }
 }

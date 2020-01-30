@@ -10,6 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public const TABLE_NAME = 'user';
+
+    protected $table = self::TABLE_NAME;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -1,6 +1,7 @@
 <?php
 namespace App\Requests;
 
+use App\Model\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,7 @@ class StoreRegisterUser extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:15'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::TABLE_NAME],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
