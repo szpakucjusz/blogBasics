@@ -5,11 +5,11 @@
     <ul>
         <li>
             <div class="container">
-                @foreach ($posts as $post)
-                    {{ $post->name }}
+                @foreach ($users as $user)
+                    {{ $user->name }} | {{ $user->email }}
                 @endforeach
             </div>
-            {{ $posts->links() }}
+            {{ $users->links() }}
         </li>
     </ul>
 </div>

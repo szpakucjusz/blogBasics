@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-    @include('post._partials.menu')
     <div class="container">
         <form method="post" action="/post" enctype="multipart/form-data">
             @method('POST')

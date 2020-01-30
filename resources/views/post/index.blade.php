@@ -4,8 +4,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
-    @include('post._partials.menu')
-
     <div class="container">
         <table class="db">
             <thead>

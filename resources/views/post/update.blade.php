@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-    @include('post._partials.menu')
     <div>
         <form method="POST" action="/post/{{ $post->id }}">
             @method('PUT')

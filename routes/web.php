@@ -2,10 +2,7 @@
 
 Route::resource('/', 'IndexController');
 Route::resource('post', 'PostController');
-
-Auth::routes();
-
-
+Route::get('user', 'UsersController@list');
 
 Auth::routes();
 

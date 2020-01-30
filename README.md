@@ -18,3 +18,7 @@ Typical workflow. Go to project directory and type:
 
 Main feature to check:
 app/Http/Controllers/PostController.php method store
+
+Additional:
+1. Optional seed:
+docker exec -it app-recrutation-blog php artisan db:seed
