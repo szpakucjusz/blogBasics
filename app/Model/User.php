@@ -30,6 +30,16 @@ class User extends Authenticatable
         return [self::ROLE_EDITOR, self::ROLE_ADMIN];
     }
 
+    public function hasAdminRole()
+    {
+        return $this->role === User::ROLE_ADMIN;
+    }
+
+    public function hasEditorRole()
+    {
+        return in_array($this->role, self::getUserPrivilegesRoles());
+    }
+
     /**
      * The attributes that are mass assignable.
      *

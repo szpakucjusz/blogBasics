@@ -44,11 +44,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function userExistAndHasRole(array $credentials): bool
     {
-        return null !== User::where(
-            ['name' => $credentials['email'],
-                'password' => Hash::make($credentials['password'])])
-                ->whereIn('role',
-                    User::getUserPrivilegesRoles())
-                ->first();
+        return null !== User::where('email', $credentials['email'])
+                ->whereIn('role', User::getUserPrivilegesRoles())->first();
     }
 }
