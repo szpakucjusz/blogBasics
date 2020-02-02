@@ -1,0 +1,43 @@
+.main-content {
+    margin-top: 30px;
+}
+.content {
+    margin: 0 auto;
+    width: 500px;
+    margin-top: 20px;
+}
+.content-menu {
+     margin: 0 auto 0 30px;
+     width: 500px;
+     float: left;
+ }
+.content-list {
+    margin: 0 auto;
+    width: 90%;
+    margin-top: 20px;
+}
+form div, .question, h1 {
+    margin: 10px;
+}
+body {
+    background-color: lightgray;
+}
+.zui-table {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.zui-table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+}
+.zui-table tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    font-size: 1rem;
+}

@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     @yield('metaCsrf', '')
 </head>
-<body style="background-color: darkslategray;">
+<body>
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -45,7 +45,7 @@
 </nav>
 @include('_partials.flash-message')
 <section class="main-content">
-    @include('post._partials.menu')
+    @include('_partials.menu')
     @yield('content')
 </section>
 </body>
