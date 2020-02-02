@@ -7,6 +7,7 @@ use App\Model\Post;
 use App\Services\PostService;
 use App\Services\StorageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class PostController
@@ -16,7 +17,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('post.index', ['posts' => Post::orderBy('id', 'DESC')->get()]);
+        return view('post.index', ['posts' => DB::table(Post::TABLE_NAME)->paginate(10)]);
     }
 
     public function create()

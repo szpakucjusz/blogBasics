@@ -38,3 +38,4 @@ use App\Model\User;
     @endforeach
     </tbody>
 </table>
+{{ $posts->links() }}
