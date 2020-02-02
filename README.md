@@ -8,9 +8,10 @@ To start project correctly first time:
 2. https://docs.docker.com/compose/install/
 3. For recrutation purposes I added .env file to git project. 
 4. Go to project directory and type "docker-compose up --build -d" or "sudo docker-compose up --build -d".
-5. type: "bash deployprod.sh" or "sudo bash deployprod.sh" (typing sudo it's bad but only for recrutating purposes).
-6. docker exec -it app-recrutation-blog php artisan storage:link
-7. App should work on 127.0.0.1:83
+5. Configure email connection in .env file
+6. type: "bash deployprod.sh" or "sudo bash deployprod.sh" (typing sudo it's bad but only for recrutating purposes).
+7. docker exec -it app-recrutation-blog php artisan storage:link
+8. App should work on 127.0.0.1:83
 
 Typical workflow. Go to project directory and type:
 1. docker-compose start

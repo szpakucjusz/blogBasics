@@ -1,15 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Http\Requests\StorePost;
-use App\Model\Image;
-use App\Model\Post;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Requests\StoreResetPassword;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\PasswordBroker;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PasswordService
 {
@@ -19,10 +15,15 @@ class PasswordService
      * @var PasswordBroker
      */
     private $passwordBroker;
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
 
-    public function __construct(PasswordBroker $passwordBroker)
+    public function __construct(PasswordBroker $passwordBroker, UserRepositoryInterface $userRepository)
     {
         $this->passwordBroker = $passwordBroker;
+        $this->userRepository = $userRepository;
     }
 
     public function reset(StoreResetPassword $request): void
@@ -48,22 +49,18 @@ class PasswordService
      */
     protected function resetPassword($user, $password)
     {
-        $this->setUserPassword($user, $password);
-        $user->setRememberToken(Str::random(60));
-        $user->save();
-        event(new PasswordReset($user));
-        $this->guard()->login($user);
+        $this->userRepository->resetPassword($user, $password);
+        event(new PasswordReset($this->userRepository->get()));
+        $this->guard()->login($this->userRepository->get());
     }
 
     /**
-     * Set the user's password.
+     * Get the guard to be used during password reset.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
-     * @return void
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    protected function setUserPassword($user, $password)
+    protected function guard()
     {
-        $user->password = Hash::make($password);
+        return Auth::guard();
     }
 }
