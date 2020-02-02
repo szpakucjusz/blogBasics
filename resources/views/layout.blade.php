@@ -45,7 +45,6 @@
 </nav>
 @include('_partials.flash-message')
 <section class="main-content">
-    @include('_partials.menu')
     @yield('content')
 </section>
 </body>
