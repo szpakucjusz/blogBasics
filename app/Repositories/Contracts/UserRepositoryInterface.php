@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function get(): ?BaseUser;
 
     public function resetPassword(BaseUser $user, string $password): void;
+
+    public function userExistAndHasRole(array $credentials): bool;
 }

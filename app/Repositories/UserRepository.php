@@ -35,4 +35,20 @@ class UserRepository implements UserRepositoryInterface
         $user->setRememberToken(Str::random(60));
         $user->save();
     }
+
+    /**
+     * Retrieve a user by the given credentials.
+     *
+     * @param array $credentials
+     * @return bool
+     */
+    public function userExistAndHasRole(array $credentials): bool
+    {
+        return null !== User::where(
+            ['name' => $credentials['email'],
+                'password' => Hash::make($credentials['password'])])
+                ->whereIn('role',
+                    User::getUserPrivilegesRoles())
+                ->first();
+    }
 }

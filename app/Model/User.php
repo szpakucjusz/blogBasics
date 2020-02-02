@@ -14,6 +14,22 @@ class User extends Authenticatable
 
     protected $table = self::TABLE_NAME;
 
+    public const ROLE_DEFAULT = 'default';
+
+    public const ROLE_EDITOR = 'editor';
+
+    public const ROLE_ADMIN = 'admin';
+
+    public static function getUserAllRoles(): array
+    {
+        return [self::ROLE_DEFAULT, self::ROLE_EDITOR, self::ROLE_ADMIN];
+    }
+
+    public static function getUserPrivilegesRoles(): array
+    {
+        return [self::ROLE_EDITOR, self::ROLE_ADMIN];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
