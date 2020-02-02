@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Http\Requests\UpdateRole;
 use App\Model\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Requests\StoreRegisterUser;
@@ -46,5 +47,12 @@ class UserRepository implements UserRepositoryInterface
     {
         return null !== User::where('email', $credentials['email'])
                 ->whereIn('role', User::getUserPrivilegesRoles())->first();
+    }
+
+    public function editRole(UpdateRole $request): void
+    {
+        $user = User::find($request['id']);
+        $user->role = $request['role'];
+        $user->update();
     }
 }

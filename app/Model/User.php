@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use phpDocumentor\Reflection\Types\Self_;
 
 class User extends Authenticatable
 {
@@ -30,14 +31,19 @@ class User extends Authenticatable
         return [self::ROLE_EDITOR, self::ROLE_ADMIN];
     }
 
-    public static function hasAdminRole(string $role)
+    public static function hasAdminRole(string $role): bool
     {
         return $role === User::ROLE_ADMIN;
     }
 
-    public static function hasEditorRole(string $role)
+    public static function hasEditorRole(string $role): bool
     {
         return in_array($role, self::getUserPrivilegesRoles());
+    }
+
+    public static function getUserRolesString(): string
+    {
+        return self::ROLE_DEFAULT . ',' . self::ROLE_EDITOR . ',' . self::ROLE_ADMIN;
     }
 
     /**

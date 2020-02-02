@@ -4,23 +4,16 @@ $( document ).ready(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
-
-    $(".btn-submit").click(function(e){
+    $(".btn-submit-edit-role").click(function(e){
         e.preventDefault();
-        var name = $("input[name=name]").val();
-        var password = $("input[name=password]").val();
-        var email = $("input[name=email]").val();
+        var parent = $(this).parent('form');
         $.ajax({
             type:'POST',
-            url:'/ajaxRequest',
-            data:{name:name, password:password, email:email},
+            url: parent.attr('action'),
+            data: parent.serialize(),
             success:function(data){
-                alert(data.success);
+                console.log(data.success);
             }
-
         });
-
-
     });
 });

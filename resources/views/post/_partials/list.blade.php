@@ -27,7 +27,7 @@ use App\Model\User;
                 @if(User::hasEditorRole(Auth::user()->role))
                 <td><a href="post/{{ $post->id }}/edit">Edit</a></td>
                 <td>
-                    <form method="POST" action="posts/edit-role/{{ $post->id }}">
+                    <form method="POST" action="post/{{ $post->id }}">
                         @method('POST'){{ csrf_field() }}
                         <button type="submit">Delete</button>
                     </form>
