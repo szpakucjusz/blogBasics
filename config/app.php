@@ -177,7 +177,7 @@ return [
         App\Providers\PostProvider::class,
         App\Providers\PasswordProvider::class,
         App\Providers\StorageProvider::class,
-        App\Providers\UserProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

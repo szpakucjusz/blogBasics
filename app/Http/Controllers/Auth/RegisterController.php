@@ -3,13 +3,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Model\User;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Requests\StoreRegisterUser;
-use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -21,15 +18,20 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->middleware('guest');
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -46,37 +48,13 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param StoreRegisterUser $request
-     * @param UserService $userService
      * @return \Illuminate\Http\Response
      */
-    public function register(StoreRegisterUser $request, UserService $userService)
+    public function register(StoreRegisterUser $request)
     {
-        $userService->createUser($request);
-        $user = $userService->getUser();
-        $this->guard()->login($user);
+        $this->userRepository->create($request);
+        event(new Registered($this->userRepository->get()));
 
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
-    }
-
-    /**
-     * Get the guard to be used during registration.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard();
-    }
-
-    /**
-     * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function registered(Request $request, $user)
-    {
-        //
+        return redirect($this->redirectPath());
     }
 }

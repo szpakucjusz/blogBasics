@@ -1,27 +1,29 @@
 <?php
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Model\User;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Requests\StoreRegisterUser;
-use App\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\User as BaseUser;
 
-
-class UserService
+class UserRepository implements UserRepositoryInterface
 {
-    public $user;
+    /**
+     * @var User
+     */
+    private $user;
 
-    public function createUser(StoreRegisterUser $storeRegisterUser)
+    public function create(StoreRegisterUser $storeRegisterUser): void
     {
         $this->user = User::create([
             'name' => $storeRegisterUser['name'],
             'email' => $storeRegisterUser['email'],
             'password' => Hash::make($storeRegisterUser['password']),
         ]);
-        event(new Registered($this->user));
     }
 
-    public function getUser(): User
+    public function get(): ?BaseUser
     {
         return $this->user;
     }
