@@ -1,3 +1,6 @@
+<?php
+use App\Model\User;
+?>
 <table class="db">
     <thead>
     <tr>
@@ -5,8 +8,12 @@
         <td>name</td>
         <td>created at</td>
         <td>updated at</td>
+        @auth
+            @if(User::hasEditorRole(Auth::user()->role))
         <td>edit post</td>
         <td>delete post</td>
+            @endif
+        @endauth
     </tr>
     </thead>
     <tbody>
@@ -16,13 +23,17 @@
             <td>{{ $post->name }}</td>
             <td>{{ $post->created_at }}</td>
             <td>{{ $post->updated_at }}</td>
-            <td><a href="post/{{ $post->id }}/edit">Edit</a></td>
-            <td>
-                <form method="POST" action="post/{{ $post->id }}">
-                    @method('DELETE'){{ csrf_field() }}
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
+            @auth
+                @if(User::hasEditorRole(Auth::user()->role))
+                <td><a href="post/{{ $post->id }}/edit">Edit</a></td>
+                <td>
+                    <form method="POST" action="posts/edit-role/{{ $post->id }}">
+                        @method('POST'){{ csrf_field() }}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                @endif
+            @endauth
         </tr>
     @endforeach
     </tbody>

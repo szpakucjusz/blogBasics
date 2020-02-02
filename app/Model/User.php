@@ -30,14 +30,14 @@ class User extends Authenticatable
         return [self::ROLE_EDITOR, self::ROLE_ADMIN];
     }
 
-    public function hasAdminRole()
+    public static function hasAdminRole(string $role)
     {
-        return $this->role === User::ROLE_ADMIN;
+        return $role === User::ROLE_ADMIN;
     }
 
-    public function hasEditorRole()
+    public static function hasEditorRole(string $role)
     {
-        return in_array($this->role, self::getUserPrivilegesRoles());
+        return in_array($role, self::getUserPrivilegesRoles());
     }
 
     /**
